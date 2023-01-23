@@ -14,13 +14,19 @@ class ProductPage(BasePage):
         assert product_name_in_message == product_name, 'Product name in message is not equal to product name'
 
     def should_see_total_price_message(self):
-        assert self.browser.find_element(*ProductPageLocators.BASKET_TOTAL_PRICE_MESSAGE), \
-            'There is no total basket price message'
+        assert self.is_element_present(*ProductPageLocators.BASKET_TOTAL_PRICE_MESSAGE), 'There is no total ' \
+                                                                                                 'basket price message '
 
     def should_see_product_price(self):
-        assert self.browser.find_element(*ProductPageLocators.PRODUCT_PRICE), 'There is no product price'
+        assert self.is_element_present(*ProductPageLocators.PRODUCT_PRICE), 'There is no product price'
 
     def prices_should_be_equal(self):
         product_price = self.browser.find_element(*ProductPageLocators.PRODUCT_PRICE).text
         basket_total_price = self.browser.find_element(*ProductPageLocators.BASKET_TOTAL_PRICE_MESSAGE).text
         assert product_price == basket_total_price, 'Price in message is not equal to product price'
+
+    def success_message_should_be_disappeared(self):
+        assert self.is_disappeared(*ProductPageLocators.PRODUCT_ADDED_MESSAGE) == True, 'Success message is not disappeared'
+
+    def should_not_see_success_message(self):
+        assert self.is_not_element_present(*ProductPageLocators.PRODUCT_ADDED_MESSAGE) == True, 'There is success message'
