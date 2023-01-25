@@ -8,6 +8,11 @@ from math import *
 
 
 class BasePage:
+    def __init__(self, browser, url, timeout=10):
+        self.browser = browser
+        self.url = url
+
+    #        self.browser.implicitly_wait(timeout)
     def go_to_login_page(self):
         login_link = self.browser.find_element(*BasePageLocators.LOGIN_LINK)  # * - означает,
         # что передается пара элементов, которые надо распаковать
@@ -21,10 +26,8 @@ class BasePage:
         assert self.is_element_present(*BasePageLocators.LOGIN_LINK), "Login link is not presented"  # * - означает,
         # что передается пара элементов, которые надо распаковать
 
-    def __init__(self, browser, url, timeout=10):
-        self.browser = browser
-        self.url = url
-#        self.browser.implicitly_wait(timeout)
+    def should_be_authorized_user(self):
+        assert self.is_element_present(*BasePageLocators.USER_ICON)
 
     def open(self):
         self.browser.get(self.url)

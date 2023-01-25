@@ -1,4 +1,5 @@
 import pytest
+from .pages.login_page import LoginPage
 from .pages.product_page import ProductPage
 from .pages.basket_page import BasketPage
 import time
@@ -60,3 +61,32 @@ class TestProductPage:
         product_page.add_product_to_the_basket()
         product_page.solve_quiz_and_get_code()
         product_page.success_message_should_be_disappeared()
+
+
+class TestUserAddToBasketFromProductPage:
+    @pytest.fixture(scope='function', autouse=True)
+    def setup(self, browser):
+        email = 'admin@mail.org'
+        password = '8cWRzBVqt7FWPnQ'
+        link = 'http://selenium1py.pythonanywhere.com/ru/accounts/login/'
+        registration_page = LoginPage(browser, link)
+        registration_page.open()
+        registration_page.register_new_user(email, password)
+        registration_page.should_be_authorized_user()
+
+    def test_user_can_add_product_to_basket(self, browser, promo_offer_number):
+        link = f'http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer{promo_offer_number}'
+        product_page = ProductPage(browser, link)
+        product_page.open()
+        product_page.add_product_to_the_basket()
+        product_page.solve_quiz_and_get_code()
+        product_page.should_see_new_book_in_basket()
+        product_page.should_see_product_price()
+        product_page.should_see_total_price_message()
+        product_page.prices_should_be_equal()
+
+    def test_user_cant_see_success_message(self, browser, promo_offer_number):
+        link = f'http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer{promo_offer_number}'
+        product_page = ProductPage(browser, link)
+        product_page.open()
+        product_page.should_not_see_success_message()
