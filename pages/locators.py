@@ -15,7 +15,8 @@ class MainPageLocators:
 class LoginPageLocators:
     LOGIN_FORM = (By.ID, 'login_form')
     REGISTER_FORM = (By.ID, 'register_form')
-    LOGIN_REGISTRATION_FORM_LINK = "http://selenium1py.pythonanywhere.com/ru/accounts/login/"
+    LOGIN_REGISTRATION_FORM_LINK = "http://selenium1py.pythonanywhere.com/en-gb/accounts/login/"
+   # "http://selenium1py.pythonanywhere.com/ru/accounts/login/"
     EMAIL_FIELD_REGISTRATION = (By.NAME, 'registration-email')
     PASSWORD_FIELD_REGISTRATION = (By.NAME, 'registration-password1')
     PASSWORD_AGAIN_FIELD_REGISTRATION = (By.NAME, 'registration-password2')

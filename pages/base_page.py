@@ -12,7 +12,6 @@ class BasePage:
         self.browser = browser
         self.url = url
 
-    #        self.browser.implicitly_wait(timeout)
     def go_to_login_page(self):
         login_link = self.browser.find_element(*BasePageLocators.LOGIN_LINK)  # * - означает,
         # что передается пара элементов, которые надо распаковать
@@ -27,7 +26,7 @@ class BasePage:
         # что передается пара элементов, которые надо распаковать
 
     def should_be_authorized_user(self):
-        assert self.is_element_present(*BasePageLocators.USER_ICON)
+        assert self.is_element_present(*BasePageLocators.USER_ICON), 'User is not authorized'
 
     def open(self):
         self.browser.get(self.url)

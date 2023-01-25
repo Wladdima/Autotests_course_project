@@ -1,11 +1,8 @@
 import time
-
 import pytest
-
 from .pages.main_page import MainPage
 from .pages.login_page import LoginPage
 from .pages.basket_page import BasketPage
-from .pages.locators import BasePageLocators
 
 
 @pytest.mark.login_guest

@@ -45,7 +45,6 @@ class TestProductPage:
         product_page.open()
         product_page.go_to_basket()
         basket_page = BasketPage(browser, link)
-        time.sleep(3)
         basket_page.should_be_empty()
 
     def test_guest_should_see_login_link_on_product_page(self, browser, promo_offer_number):
@@ -63,10 +62,12 @@ class TestProductPage:
         product_page.success_message_should_be_disappeared()
 
 
+@pytest.mark.parametrize('promo_offer_number', ['0', '1', '2', '3', '4', '5', '6', pytest.param('7', marks=pytest.mark.
+                                                                                  xfail(reason="bug")), '8', '9'])
 class TestUserAddToBasketFromProductPage:
     @pytest.fixture(scope='function', autouse=True)
     def setup(self, browser):
-        email = 'admin@mail.org'
+        email = str(time.time()) + "@fakemail.org"
         password = '8cWRzBVqt7FWPnQ'
         link = 'http://selenium1py.pythonanywhere.com/ru/accounts/login/'
         registration_page = LoginPage(browser, link)

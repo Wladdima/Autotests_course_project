@@ -2,7 +2,6 @@ import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
-
 options_languages = Options()
 
 
@@ -10,7 +9,7 @@ def pytest_addoption(parser):
     parser.addoption('--language', action='store', default=None, help='Choose language: ru, de or en')
 
 
-@pytest.fixture(scope='module')
+@pytest.fixture(scope='function')
 def browser(request):
 
     browser_language = request.config.getoption('language')
