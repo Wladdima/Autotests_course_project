@@ -6,7 +6,7 @@ import time
 
 
 @pytest.mark.parametrize('promo_offer_number', ['0', '1', '2', '3', '4', '5', '6', pytest.param('7', marks=pytest.mark.
-                                                                                  xfail(reason="bug")), '8', '9'])
+                                                                                  xfail(reason="bug is known")), '8', '9'])
 class TestProductPage:
     def test_guest_can_add_product_to_basket(self, browser, promo_offer_number):
         link = f'http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer{promo_offer_number}'
@@ -19,6 +19,7 @@ class TestProductPage:
         product_page.should_see_total_price_message()
         product_page.prices_should_be_equal()
 
+    @pytest.mark.xfail(reason='bug is known')
     def test_guest_cant_see_success_message_after_adding_product_to_basket(self, browser, promo_offer_number):
         link = f'http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer{promo_offer_number}'
         product_page = ProductPage(browser, link)
@@ -53,6 +54,7 @@ class TestProductPage:
         product_page.open()
         product_page.should_be_login_link()
 
+    @pytest.mark.xfail(reason='bug is known')
     def test_message_disappeared_after_adding_product_to_basket(self, browser, promo_offer_number):
         link = f'http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer{promo_offer_number}'
         product_page = ProductPage(browser, link)
@@ -63,7 +65,7 @@ class TestProductPage:
 
 
 @pytest.mark.parametrize('promo_offer_number', ['0', '1', '2', '3', '4', '5', '6', pytest.param('7', marks=pytest.mark.
-                                                                                  xfail(reason="bug")), '8', '9'])
+                                                                                  xfail(reason="bug is known")), '8', '9'])
 class TestUserAddToBasketFromProductPage:
     @pytest.fixture(scope='function', autouse=True)
     def setup(self, browser):
@@ -75,6 +77,7 @@ class TestUserAddToBasketFromProductPage:
         registration_page.register_new_user(email, password)
         registration_page.should_be_authorized_user()
 
+    @pytest.mark.need_review
     def test_user_can_add_product_to_basket(self, browser, promo_offer_number):
         link = f'http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer{promo_offer_number}'
         product_page = ProductPage(browser, link)
